@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 
 @Component({
   selector: 'app-server-status',
@@ -7,13 +14,14 @@ import { Component, Input, OnInit } from '@angular/core';
   templateUrl: './server-status.component.html',
   styleUrl: './server-status.component.css',
 })
-export class ServerStatusComponent implements OnInit {
+export class ServerStatusComponent implements OnInit, OnDestroy {
   @Input({ required: true }) currentStatus!: string;
-
+  private interval?: ReturnType<typeof setInterval>;
+  private DestroyRef = inject(DestroyRef);
   // currentStatus: 'online' | 'offline' | 'unknown' = 'offline';
   constructor() {}
   ngOnInit() {
-    setInterval(() => {
+    const interval = setInterval(() => {
       const res = Math.random();
       console.log(res, this.currentStatus);
       if (res < 0.5) {
@@ -24,5 +32,10 @@ export class ServerStatusComponent implements OnInit {
         this.currentStatus = 'unknown';
       }
     }, 3000);
+    this.DestroyRef.onDestroy(() => clearInterval(interval));
+  }
+  // you can use any way but if you are using Angular's version above 17 you can use DestroyRef.
+  ngOnDestroy() {
+    clearInterval(this.interval);
   }
 }
