@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-server-status',
@@ -8,5 +8,20 @@ import { Component, input } from '@angular/core';
   styleUrl: './server-status.component.css',
 })
 export class ServerStatusComponent {
-  currentStatus = input<string>();
+  @Input({ required: true }) currentStatus!: string;
+
+  // currentStatus: 'online' | 'offline' | 'unknown' = 'offline';
+  constructor() {
+    setInterval(() => {
+      const res = Math.random();
+      console.log(res, this.currentStatus);
+      if (res < 0.5) {
+        this.currentStatus = 'online';
+      } else if (res < 0.9) {
+        this.currentStatus = 'offline';
+      } else {
+        this.currentStatus = 'unknown';
+      }
+    }, 3000);
+  }
 }

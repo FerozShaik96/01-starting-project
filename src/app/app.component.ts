@@ -13,7 +13,7 @@ import { DarshboardItemComponent } from './dashboard/darshboard-item/darshboard-
     TicketsComponent,
     ServerStatusComponent,
     TrafficComponent,
-    DarshboardItemComponent
+    DarshboardItemComponent,
   ],
   templateUrl: './app.component.html',
 })
@@ -48,12 +48,9 @@ export class AppComponent {
       value: 589,
     },
   ];
-  currentStatus = 'online';
+  currentStatus: 'online' | 'offline' | 'unknown' = 'offline';
   maxTraffic = Math.max(...this.dummyTrafficData.map((data) => data.value));
 
-  get serverStatus() {
-    return this.currentStatus;
-  }
   get trafficDummyData() {
     return this.dummyTrafficData;
   }
