@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { ServerStatusComponent } from './dashboard/server-status/server-status.component';
 import { TrafficComponent } from './dashboard/traffic/traffic.component';
@@ -48,7 +48,7 @@ export class AppComponent {
       value: 589,
     },
   ];
-  currentStatus: 'online' | 'offline' | 'unknown' = 'offline';
+  currentStatus=signal<'online' | 'offline' | 'unknown'>("offline")
   maxTraffic = Math.max(...this.dummyTrafficData.map((data) => data.value));
 
   get trafficDummyData() {
