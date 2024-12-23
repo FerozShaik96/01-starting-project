@@ -1,5 +1,7 @@
 import {
   Component,
+  ContentChild,
+  ElementRef,
   HostBinding,
   HostListener,
   input,
@@ -16,13 +18,18 @@ import {
   encapsulation: ViewEncapsulation.None,
   host: {
     class: 'control',
-    // '(click)': 'onclick()',
+    '(click)': 'onclick()',
   },
 })
 export class ControlComponent {
   // @HostBinding('class') className = 'control';
   label = input.required<string>();
+  @ContentChild('input') private control?:ElementRef<HTMLInputElement |HTMLTextAreaElement>
   // @HostListener('click') onClick() {
   //   console.log('Hello Clicked');
   // }
+  onclick() {
+      console.log('Hello Clicked');
+      console.log(this.control)
+    }
 }
