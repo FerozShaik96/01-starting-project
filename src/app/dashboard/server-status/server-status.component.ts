@@ -23,7 +23,6 @@ export class ServerStatusComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const interval = setInterval(() => {
       const res = Math.random();
-      console.log(res, this.currentStatus);
       if (res < 0.5) {
         this.currentStatus = 'online';
       } else if (res < 0.9) {
